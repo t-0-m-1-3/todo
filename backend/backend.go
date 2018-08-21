@@ -5,9 +5,22 @@ import (
 	"net/http"
 )
 
-func Start(config Config) error {
+type Backend interface {
+	Start() error
+}
 
-	http.Handle("/", http.FileServer(config.Static))
-	log.Printf(`listening on %s`, config.Address)
-	return http.ListenAndServe(config.Address, nil)
+type backend struct {
+	Config
+}
+
+func New(config Config) Backend {
+
+	return &backend{Config: config}
+}
+
+func (b *backend) Start() error {
+
+	http.Handle("/", http.FileServer(b.Static))
+	log.Printf(`listening on %s`, b.Address)
+	return http.ListenAndServe(b.Address, nil)
 }

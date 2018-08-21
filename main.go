@@ -18,5 +18,5 @@ func main() {
 		Address: addressDefault,
 	}
 
-	log.Print(backend.Start(config))
+	log.Print(backend.New(config).Start())
 }
