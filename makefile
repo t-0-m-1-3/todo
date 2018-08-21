@@ -2,7 +2,10 @@ all: dist
 
 dist:
 	make -C frontend
-	go build -o dist/todo
+	packr build -o dist/todo
+
+start: dist
+	dist/todo
 
 clean:
 	@rm -rf dist
